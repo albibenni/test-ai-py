@@ -26,6 +26,9 @@ def main():
         model="gemini-2.5-flash",
         contents=prompt,
     )
+    if response.usage_metadata:
+        print("Prompt tokens: ", response.usage_metadata.prompt_token_count)
+        print("Response tokens: ", response.usage_metadata.candidates_token_count)
     print(response.text)
 
 
