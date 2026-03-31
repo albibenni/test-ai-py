@@ -1,5 +1,32 @@
+"""Main module for the AI-py application."""
+
+import os
+
+from dotenv import load_dotenv
+from google import genai
+
+load_dotenv()
+api_key = os.environ.get("GEMINI_API_KEY")
+
+if api_key is None:
+    raise RuntimeError(
+        "GEMINI_API_KEY environment variable not found. Please set it in your .env file."
+    )
+
+client = genai.Client(api_key=api_key)
+
+
 def main():
-    print("Hello from ai-py!")
+    """Send a prompt to Gemini and print the response."""
+    prompt = (
+        "Why is Boot.dev such a great place to learn backend development?"
+        " Use one paragraph maximum."
+    )
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
+    print(response.text)
 
 
 if __name__ == "__main__":
